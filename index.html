@@ -3,53 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحت الصيانة</title>
+    <title>🚀 بابا المجال النسخة المجانية iOS</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; /* يخلي المحتوى في نص الشاشة بالظبط */
-            background-color: #f4f6f9; /* لون خلفية هادي */
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        
-        .container {
-            padding: 20px;
-        }
-
-        .emoji {
-            font-size: 15vw; /* حجم الإيموشن عملاق ومتجاوب */
-            display: block;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite; /* حركة تنطيط خفيفة للإيموشن */
-        }
-
-        h1 {
-            font-size: 10vw; /* حجم الخط ضخم جداً ومتجاوب مع الشاشة */
-            color: #272424;
-            margin: 0;
-            font-weight: bold;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
-        }
-
-        /* حركة بسيطة للإيموشن عشان تلفت الانتباه */
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-30px);}
-            60% {transform: translateY(-15px);}
-        }
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 15px; text-align: center; direction: rtl; }
+        .container { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); max-width: 450px; margin: 0 auto; }
+        h2 { color: #1e7e34; margin-top: 5px; font-size: 22px; }
+        .stats { display: flex; justify-content: space-around; margin: 15px 0; background: #f8f9fa; padding: 12px; border-radius: 10px; border: 1px solid #eee; }
+        .stat-box { font-size: 13px; color: #666; }
+        .stat-val { font-weight: bold; font-size: 16px; margin-top: 4px; }
+        textarea { width: 100%; height: 220px; border: 1px solid #ccc; border-radius: 10px; padding: 12px; font-size: 14px; resize: none; box-sizing: border-box; font-family: monospace; }
+        button { background-color: #28a745; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 6px rgba(40,167,69,0.2); }
+        button:active { background-color: #1e7e34; }
+        .footer-link { margin-top: 15px; display: block; font-size: 12px; color: #007bff; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <span class="emoji">😂</span>
-        <h1>سنعود قريباً!</h1>
+<div class="container">
+    <h2>🚀 بابا المجال (النسخة المجانية 100%)</h2>
+    
+    <div class="stats">
+        <div class="stat-box">🏢 المنشأة الملقوطة:<div id="estId" class="stat-val" style="color: #007bff;">---</div></div>
+        <div class="stat-box">👤 عدد العمال:<div id="workerCount" class="stat-val" style="color: #28a745;">0</div></div>
     </div>
 
+    <textarea id="inputText" placeholder="الصق النص المحتوي على الموحد والهويات هنا...&#10;(الرادار سيلقطها ويعدلها تلقائياً فوراً)"></textarea>
+    
+    <button onclick="finalizeAndDownload()">توليد وحفظ ملف الأجور (.txt)</button>
+    <a id="actionLink" class="footer-link" style="display:none;">اضغط هنا إذا لم يبدأ التحميل تلقائياً</a>
+</div>
+
+<script>
+    let currentEstId = "---";
+    let workerPool = new Set();
+
+    // رادار الصيد المرن عند اللصق
+    document.getElementById('inputText').addEventListener('input', function(e) {
+        let text = e.target.value;
+        
+        // لقط الموحد بجميع أشكاله
+        let estRegex = /\b\d{1,2}\s*-\s*\d{3,10}\b/;
+        let estMatch = text.match(estRegex);
+        if (estMatch) {
+            let rawId = estMatch[0].replace(/\s+/g, '');
+            if (/^\d-/.test(rawId)) {
+                currentEstId = "0" + rawId;
+            } else {
+                currentEstId = rawId;
+            }
+            document.getElementById('estId').innerText = currentEstId;
+        }
+
+        // لقط هويات العمال
+        let workerRegex = /\b\d{10}\b/g;
+        let workerMatches = text.match(workerRegex);
+        if (workerMatches) {
+            workerMatches.forEach(id => workerPool.add(id));
+            document.getElementById('workerCount').innerText = workerPool.size;
+        }
+    });
+
+    // تنسيق المبالغ 16 خانة
+    function format16(amount) {
+        let fixed = amount.toFixed(2).replace('.', ',');
+        return fixed.padStart(16, '0');
+    }
+
+    // تنسيق المبالغ 13 خانة
+    function format13(amount) {
+        let fixed = amount.toFixed(2).replace('.', ',');
+        return fixed.padStart(13, '0');
+    }
+
+    // 💡 الدالة السحرية لحساب بايتات الحروف العربية وضبط المسافات بدقة 100%
+    function padBytes(str, targetLength) {
+        let byteLen = new Blob([str]).size; 
+        let spacesNeeded = targetLength - byteLen;
+        return str + ' '.repeat(spacesNeeded > 0 ? spacesNeeded : 0);
+    }
+
+    function finalizeAndDownload() {
+        if (currentEstId === "---" || currentEstId === "") {
+            alert("⚠️ لم يتم التقاط الرقم الموحد للمنشأة! تأكد من وجوده في النص.");
+            return;
+        }
+        if (workerPool.size === 0) {
+            alert("⚠️ لم يتم التقاط أي هويات للعمال!");
+            return;
+        }
+
+        let now = new Date();
+        let today = now.getFullYear() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
+        let todayShort = String(now.getFullYear()).substring(2) + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
+
+        let totalSum = 0;
+        let workerRows = [];
+        let idx = 0;
+        let sortedWorkers = Array.from(workerPool).sort();
+
+        sortedWorkers.forEach(nid => {
+            idx++;
+            let base = nid.startsWith('1') ? 14500.0 : 10000.0;
+            let allow = nid.startsWith('1') ? 1000.0 : 500.0;
+            totalSum += (base + allow);
+
+            let randIban = Math.floor(Math.random() * 89999999) + 10000000;
+            let randRef = Math.floor(Math.random() * 89999) + 10000;
+            let ibanFull = 'SA' + (Math.floor(Math.random() * 90) + 10) + '800001296080' + randIban;
+            
+            // استخدام padBytes والـ \r\n لإنتاج السطر بنفس هندسة البنك بالضبط
+            let row = `${format16(base+allow)}\t${padBytes(ibanFull, 34)}\t${padBytes('منتصر' + idx, 140)}\t${padBytes('RJHI', 140)}\t${padBytes('Payroll', 140)}\t      \t${format13(base)}\t0000000,00   \t${format13(allow)}\t0000000,00   \t${nid}\t${todayShort}51810${randRef}\tSuccess \t${today}\r\n`;
+            workerRows.push(row);
+        });
+
+        // الهيدر مطابق حرفياً بـ \r\n
+        let randHeaderNum = Math.floor(Math.random() * 899999) + 100000;
+        let header = `PMS\t${today}  \tSA${today}${today}${randHeaderNum}\tSAR\t${today}\t${format16(totalSum)}\t${today}\t${today}${today}\tP000  \t${padBytes(currentEstId, 14)}\r\n`;
+        
+        // التوقيع المشفر (المأخوذ من الملف الأصلي لمحاكاة الشكل)
+        let dummySignature = "ZnXKButkxOhhC7z/sK6xrzysMlQTnYB9k6kO6aaVANT0ye7KSzHEIDGF6M6LznwGHO3k0/kelGUY0xMhTFbgTlgOhoeGRzCl2qY0HwYCTkrSzmUlz7Kd111ocYmmgQqj6L6e8+/9dPVAZg2yTMEt77JwmJpU1XjQfMfeMLDZFaMqhXrGYQxnLnffdqyXyl2M+8GMmpbUXBcyNrI22th/chouvRpNItsrBsg6KesXVtZMFvCuAT0qLHtqpfSiLBZ9NhZB1NiRdYseXQcijfEaCVWHs9F8gdFie34FljMqgKXspuV7T4CKUqZqJw4LYJI1T3JLiIA57Jsk3wZiek+RAg==";
+
+        let fileContent = header + workerRows.join("") + "-\r\n" + dummySignature;
+
+        let blob = new Blob([fileContent], { type: "text/plain;charset=utf-8" });
+        let fileUrl = URL.createObjectURL(blob);
+        
+        let actionLink = document.getElementById("actionLink");
+        actionLink.href = fileUrl;
+        actionLink.download = `${currentEstId}.txt`;
+        actionLink.style.display = "block"; 
+        
+        actionLink.click();
+
+        setTimeout(() => {
+            workerPool.clear();
+            currentEstId = "---";
+            document.getElementById('estId').innerText = "---";
+            document.getElementById('workerCount').innerText = "0";
+            document.getElementById('inputText').value = "";
+            actionLink.style.display = "none";
+        }, 3000);
+    }
+</script>
 </body>
 </html>
